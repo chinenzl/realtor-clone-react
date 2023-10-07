@@ -43,9 +43,12 @@ export default function SignUp() {
 
         //Go to the Home Page when users complete the sign up
         navigate("/")
+        
+        //Use the React toast to show the successful notice
         toast.success("Sign Up is Successful")
 
       }catch(error){
+        //Show the ERROR notice
         toast.error("Something went wrong with the Registration")
       }
   };
