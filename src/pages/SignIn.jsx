@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 import OAuth from '../components/OAuth';
+import { signInWithEmailAndPassword,auth, getAuth } from 'firebase/auth';
+import {toast} from "react-toastify";
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,13 +11,29 @@ export default function SignIn() {
     email:"",
     password:"",
   });
+
   const{email, password} = formData;
+  const navigate = useNavigate();
   function onChange(e){
     setFormData((prevState)=>({
       ...prevState,
       [e.target.id]:e.target.value,
     }));
   };
+
+  async  function onSubmit(e){
+    e.preventDefault()
+    try{
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+     if(userCredential.user){
+      toast.success("Hello")
+      navigate('/');
+    }
+    }catch(error){
+      toast.error("Bad user Credentials")
+    }
+  }
   return (
     <section>
       <h1 className='text-3xl text-center mt-6 font-bold'>Sign In</h1>
@@ -28,7 +46,7 @@ export default function SignIn() {
             className='w-full rounded-2xl'/>
         </div>
         <div className='w-full text-center md:w-[67%] lg:w-[40%] lg:ml-20'>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className='relative'>
             <input 
               className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out" 
@@ -49,7 +67,7 @@ export default function SignIn() {
               onChange={onChange} 
               placeholder='Password' 
             />
-            {showPassword  ? (<AiFillEyeInvisible className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword((prevState)=>!prevState)}/> ) : (<AiFillEye className="absolute right-3 top-3 text-xl cursor-pointer"  ></AiFillEye>)}
+            {showPassword  ? (<AiFillEyeInvisible className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword((prevState)=>!prevState)}/> ) : (<AiFillEye className="absolute right-3 top-3 text-xl cursor-pointer" onClick={() => setShowPassword((prevState) => !prevState)} ></AiFillEye>)}
           </div>
 
           <div className='mt-6 flex justify-between whitespace-nowrap '>
@@ -61,12 +79,13 @@ export default function SignIn() {
               <Link to="/forgot-password" className='text-blue-600 hover:text-green-500 easy-in-out easy-in-out transition duration-200 ease-in-out'> Forgot Password?</Link>
             </p>
           </div>
-        </form>
+        
         <button className="w-full bg-blue-600 text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-green-600 transition duration-150 ease-in-out hover:shadow-lg active:bg-green-800 mt-6" type="submit">Sign In</button>
         <div className='flex items-center my-4 before:border-t before:flex-1 before:border-gray-300  after:border-t after:flex-1 after:border-gray-300'>
           <p className='text-center font-semibold mx-4'>OR</p>
         </div>
         <OAuth></OAuth>
+        </form>
       </div>
       </div>
       

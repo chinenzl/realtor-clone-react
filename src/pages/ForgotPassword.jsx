@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import OAuth from '../components/OAuth';
+import { sendPasswordResetEmail, getAuth } from 'firebase/auth';
+import {toast} from "react-toastify";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   function onChange(e){
     setEmail(e.target.value)
   };
+  
+  async  function onSubmit(e){
+    e.preventDefault()
+    try{
+      const auth = getAuth()
+      await sendPasswordResetEmail(auth, email)
+      toast.success("Have Resent to your Email, Please check it")
+    }catch(error){
+      toast.error("Could not send reset password")
+    }
+  }
   return (
     <section>
       <h1 className='text-3xl text-center mt-6 font-bold'>Forgot Password</h1>
@@ -19,7 +32,7 @@ export default function ForgotPassword() {
             className='w-full rounded-2xl'/>
         </div>
         <div className='w-full text-center md:w-[67%] lg:w-[40%] lg:ml-20'>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className='relative'>
             <input 
               className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out" 
@@ -42,12 +55,13 @@ export default function ForgotPassword() {
               <Link to="/sign-in" className='text-blue-600 hover:text-green-500 easy-in-out easy-in-out transition duration-200 ease-in-out'>Sign In</Link>
             </p>
           </div>
-        </form>
+    
         <button className="w-full bg-blue-600 text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-green-600 transition duration-150 ease-in-out hover:shadow-lg active:bg-green-800 mt-6" type="submit">Send Reset Password</button>
         <div className='flex items-center my-4 before:border-t before:flex-1 before:border-gray-300  after:border-t after:flex-1 after:border-gray-300'>
           <p className='text-center font-semibold mx-4'>OR</p>
         </div>
         <OAuth></OAuth>
+        </form>
       </div>
       </div>
       

@@ -93,12 +93,12 @@ export default function SignUp() {
                 onChange={onChange} 
                 placeholder='Password' 
               />
-              {showPassword  ? (<AiFillEyeInvisible className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword((prevState)=>!prevState)}/> ) : (<AiFillEye className="absolute right-3 top-3 text-xl cursor-pointer"  ></AiFillEye>)}
+              {showPassword  ? (<AiFillEyeInvisible className="absolute right-3 top-3 text-xl cursor-pointer" onClick={()=>setShowPassword((prevState)=>!prevState)}/> ) : (<AiFillEye className="absolute right-3 top-3 text-xl cursor-pointer"  onClick={() => setShowPassword((prevState) => !prevState)}></AiFillEye>)}
             </div>
 
             <div className='mt-6 flex justify-between whitespace-nowrap '>
               <p >Have an account?
-                <Link to="/sign-in" className='text-red-600 hover:text-green-500 easy-in-out transition duration-200 ease-in-out'> Register</Link>
+                <Link to="/sign-in" className='text-red-600 hover:text-green-500 easy-in-out transition duration-200 ease-in-out'> Sign In</Link>
               </p>
 
               <p>
