@@ -74,7 +74,7 @@ export default function Profile() {
         });
       });
       setListings(listings);
-      setLoading(false);
+      // setLoading(false);
     }
     fetchUserListings();
   }, [auth.currentUser.uid]);
