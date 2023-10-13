@@ -154,13 +154,12 @@ export default function CreateListing() {
       toast.error("Images not uploaded");
       return;
     });
-
+    console.log(imgUrls);
     const formDataCopy = {
       ...formData,
       imgUrls,
       geolocation,
       timestamp: serverTimestamp(),
-      userRef: auth.currentUser.uid,
     };
     delete formDataCopy.images;
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
