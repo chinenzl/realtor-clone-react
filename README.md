@@ -1,6 +1,6 @@
-# Real Talk Clone App
+# Realtor Clone App
 
-Welcome to my Real Talk Clone application project! In this project, I've had the fantastic opportunity to build and deploy a fully functional real estate application using the latest versions of React, Firebase, and Tailwind CSS.
+Welcome to my Realtor Clone application project! In this project, I've had the fantastic opportunity to build and deploy a fully functional real estate application using the latest versions of React, Firebase, and Tailwind CSS.
 
 ## What I've Learned
 
